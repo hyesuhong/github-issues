@@ -1,5 +1,3 @@
-console.log('app');
-
 function App() {
     return (
         <div className='App'>
