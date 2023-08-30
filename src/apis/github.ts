@@ -1,33 +1,27 @@
-import axios from 'axios';
-
-const BASE_URL = 'https://api.github.com';
-const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
-
-interface GetIssues {
-    owner: string;
-    repo: string;
-}
-
-interface GetIssueContent extends GetIssues {
-    issue_number: number;
-}
+import {GetIssueContent, GetIssues} from '../types/api';
+import {instance} from './axios';
 
 // /repos/{owner}/{repo}/issues
-export const getIssuesList = async ({owner, repo}: GetIssues) => {
-    return await axios.get(`${BASE_URL}/repos/${owner}/${repo}/issues?sort=comments`, {
-        headers: {
-            Authorization: `Bearer ${GITHUB_TOKEN}`,
-            'X-GitHub-Api-Version': '2022-11-28',
-        },
-    });
+/* 
+200	OK
+301	Moved permanently
+404	Resource not found
+422	Validation failed, or the endpoint has been spammed.
+*/
+export const getIssuesList = async ({owner, repo, per_page, page}: GetIssues) => {
+    const basicQuery = 'sort=comments';
+    const query = per_page && page ? `${basicQuery}&per_page=${per_page}&page=${page}` : basicQuery;
+    return await instance.get(`/repos/${owner}/${repo}/issues?${query}`);
 };
 
 // /repos/{owner}/{repo}/issues/{issue_number}
+/* 
+200	OK
+301	Moved permanently
+304	Not modified
+404	Resource not found
+410	Gone
+*/
 export const getIssueContent = async ({owner, repo, issue_number}: GetIssueContent) => {
-    return await axios.get(`${BASE_URL}/repos/${owner}/${repo}/issues/${issue_number}`, {
-        headers: {
-            Authorization: `Bearer ${GITHUB_TOKEN}`,
-            'X-GitHub-Api-Version': '2022-11-28',
-        },
-    });
+    return await instance.get(`/repos/${owner}/${repo}/issues/${issue_number}`);
 };
