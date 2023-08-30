@@ -1,3 +1,4 @@
+import {IMAGE_URL, LINK_URL} from '../../constants/advertisement';
 import {githubIssue} from '../../types/github';
 import Info from './Info';
 
@@ -13,7 +14,9 @@ const IssueList = ({index, ...props}: Props) => {
             </li>
             {(index + 1) % 4 === 0 && (
                 <li>
-                    <h1>ad item</h1>
+                    <a href={LINK_URL} target='_blank'>
+                        <img src={IMAGE_URL} alt='원티드 로고' />
+                    </a>
                 </li>
             )}
         </>
