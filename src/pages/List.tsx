@@ -35,28 +35,26 @@ const List = () => {
             return {...prev, isLoading: !prev.isLoading};
         });
 
-    const increasePageNum = () =>
-        setIssues(prev => {
-            console.info(pageCount);
-            return {...prev, pageCount: prev.pageCount + 1};
-        });
+    // const increasePageNum = () =>
+    //     setIssues(prev => {
+    //         console.info(pageCount);
+    //         return {...prev, pageCount: prev.pageCount + 1};
+    //     });
 
     // TODO: 페이지 업데이트 안되고 있음 고칠 것
     const callbackIntersection: IntersectionCB = async ([entry], observer) => {
         const {isIntersecting, target} = entry;
 
-        // console.info(isIntersecting);
-
         if (!isLoading && isIntersecting) {
             observer.unobserve(target);
 
-            changeLoadingState();
+            // changeLoadingState();
 
             await getIssues(pageCount);
 
-            increasePageNum();
+            // increasePageNum();
 
-            observer.observe(target);
+            // observer.observe(target);
         }
     };
 
