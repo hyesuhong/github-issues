@@ -8,6 +8,9 @@ export const HeaderWrapper = styled.header`
     position: sticky;
     top: 0;
 
+    background: ${props => props.theme.black};
+    border-bottom: 1px solid rgba(219, 220, 222, 0.6);
+
     & h1 {
         font-size: 22px;
         font-style: normal;
