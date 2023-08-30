@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
-import {IMAGE_URL, LINK_URL} from '../../constants/advertisement';
 import {githubIssue} from '../../types/github';
 import Info from './Info';
+import AdCell from './AdCell';
 
 interface Props extends githubIssue {
     index: number;
@@ -17,9 +17,7 @@ const IssueList = ({index, ...props}: Props) => {
             </li>
             {(index + 1) % 4 === 0 && (
                 <li>
-                    <a href={LINK_URL} target='_blank'>
-                        <img src={IMAGE_URL} alt='원티드 로고' />
-                    </a>
+                    <AdCell />
                 </li>
             )}
         </>
