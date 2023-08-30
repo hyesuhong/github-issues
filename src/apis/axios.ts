@@ -5,7 +5,7 @@ const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
 
 export const instance = axios.create({
     baseURL: BASE_URL,
-    timeout: 1000,
+    // timeout: 1000,
     headers: {'X-GitHub-Api-Version': '2022-11-28'},
 });
 
