@@ -1,4 +1,4 @@
-import {useEffect, useRef} from 'react';
+import {useCallback, useEffect, useRef} from 'react';
 
 export type IntersectionCB = (
     entries: IntersectionObserverEntry[],
@@ -38,7 +38,9 @@ export const useIntersection = <T extends HTMLElement>({
         threshold: thresholds || 0,
     };
 
-    const observer = new IntersectionObserver(handleIntersection, intersectionOpt);
+    const intersectionHandler = useCallback(handleIntersection, [handleIntersection]);
+
+    const observer = new IntersectionObserver(intersectionHandler, intersectionOpt);
 
     useEffect(() => {
         if (!ref.current) return;
@@ -52,15 +54,6 @@ export const useIntersection = <T extends HTMLElement>({
 };
 
 const getIntersectionMargin = (marginOption: IntersectionMargin) => {
-    // const type =
-    //     marginOption.length === 1
-    //         ? 'all'
-    //         : marginOption.length === 2
-    //         ? 'topBottom_leftRight'
-    //         : marginOption.length === 3
-    //         ? 'top_leftRight_bottom'
-    //         : 'top_right_bottom_left';
-
     const setMarginAllString = marginOption.map(margin =>
         typeof margin === 'number' ? `${margin}px` : margin
     );
