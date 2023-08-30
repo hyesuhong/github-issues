@@ -8,9 +8,9 @@ import {instance} from './axios';
 404	Resource not found
 422	Validation failed, or the endpoint has been spammed.
 */
-export const getIssuesList = async ({owner, repo, per_page, page}: GetIssues) => {
+export const getIssuesList = async ({owner, repo, page}: GetIssues) => {
     const basicQuery = 'sort=comments';
-    const query = per_page && page ? `${basicQuery}&per_page=${per_page}&page=${page}` : basicQuery;
+    const query = page ? `${basicQuery}&page=${page}` : basicQuery;
     return await instance.get(`/repos/${owner}/${repo}/issues?${query}`);
 };
 

@@ -1,51 +1,70 @@
-import {useEffect, useState} from 'react';
+import {useRecoilState} from 'recoil';
 import ListContainer from '../containers/ListContainer';
 import {getIssuesList} from '../apis/github';
-import {TARGET_GITHUB} from '../constants/github';
 import {IntersectionCB, useIntersection} from '../hooks/useIntersection';
+import {issuesState} from '../atom';
+import {TARGET_GITHUB} from '../constants/github';
 
 const List = () => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [page, setPage] = useState(0);
-    const [issues, setIssues] = useState();
+    const [{isLoading, pageCount}, setIssues] = useRecoilState(issuesState);
 
-    const handleIntersection: IntersectionCB = async entries => {
-        const {isIntersecting} = entries[0];
+    const getIssues = async (page: number) => {
+        setIssues(prev => {
+            return {...prev, isLoading: true};
+        });
+
+        await getIssuesList({owner: TARGET_GITHUB.OWNER, repo: TARGET_GITHUB.REPO, page})
+            .then(res => {
+                if (res.status === 200) {
+                    setIssues(prev => {
+                        return {
+                            ...prev,
+                            data: [...prev.data, ...res.data],
+                        };
+                    });
+                }
+            })
+            .catch(console.error)
+            .finally(() => {
+                changeLoadingState();
+            });
+    };
+
+    const changeLoadingState = () =>
+        setIssues(prev => {
+            return {...prev, isLoading: !prev.isLoading};
+        });
+
+    const increasePageNum = () =>
+        setIssues(prev => {
+            console.info(pageCount);
+            return {...prev, pageCount: prev.pageCount + 1};
+        });
+
+    // TODO: 페이지 업데이트 안되고 있음 고칠 것
+    const callbackIntersection: IntersectionCB = async ([entry], observer) => {
+        const {isIntersecting, target} = entry;
+
+        // console.info(isIntersecting);
 
         if (!isLoading && isIntersecting) {
-            console.info('out', page);
-            await setPage(prev => prev + 1);
-            await setIsLoading(true);
+            observer.unobserve(target);
 
-            await getIssuesList({
-                owner: TARGET_GITHUB.OWNER,
-                repo: TARGET_GITHUB.REPO,
-                per_page: 30,
-                page: page,
-            })
-                .then(res => {
-                    if (res.status === 200) {
-                        setIssues(prev => {
-                            return prev ? [...prev, ...res.data] : res.data;
-                        });
-                        setIsLoading(false);
-                    }
-                })
-                .catch(console.error);
+            changeLoadingState();
+
+            await getIssues(pageCount);
+
+            increasePageNum();
+
+            observer.observe(target);
         }
     };
 
-    const {ref, observer} = useIntersection<HTMLDivElement>({
-        handleIntersection,
-    });
-
-    useEffect(() => {
-        return () => observer.disconnect();
-    }, []);
+    const ref = useIntersection<HTMLDivElement>({callbackIntersection});
 
     return (
         <>
-            <ListContainer data={issues} intersectionRef={ref} />
+            <ListContainer intersectionRef={ref} />
         </>
     );
 };

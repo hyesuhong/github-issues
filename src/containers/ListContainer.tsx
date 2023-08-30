@@ -1,13 +1,15 @@
 import {RefObject} from 'react';
 import IssueList from '../components/issues/IssueList';
-import {githubIssue} from '../types/github';
+import {useRecoilValue} from 'recoil';
+import {issuesState} from '../atom';
 
 interface Props {
     intersectionRef: RefObject<HTMLDivElement>;
-    data?: githubIssue[];
 }
 
-const ListContainer = ({data, intersectionRef}: Props) => {
+const ListContainer = ({intersectionRef}: Props) => {
+    const {data} = useRecoilValue(issuesState);
+
     return (
         <>
             <ul>
