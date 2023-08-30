@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 import {IMAGE_URL, LINK_URL} from '../../constants/advertisement';
 import {githubIssue} from '../../types/github';
 import Info from './Info';
@@ -10,7 +11,9 @@ const IssueList = ({index, ...props}: Props) => {
     return (
         <>
             <li>
-                <Info {...props} />
+                <Link to={`/issues/${props.number}`}>
+                    <Info {...props} />
+                </Link>
             </li>
             {(index + 1) % 4 === 0 && (
                 <li>
