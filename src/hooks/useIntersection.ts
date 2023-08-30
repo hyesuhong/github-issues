@@ -21,14 +21,14 @@ interface IntersectionOption {
 }
 
 export interface IUseIntersection extends IntersectionOption {
-    handleIntersection: IntersectionCB;
+    callbackIntersection: IntersectionCB;
 }
 
 export const useIntersection = <T extends HTMLElement>({
     root,
     rootMargin,
     thresholds,
-    handleIntersection,
+    callbackIntersection,
 }: IUseIntersection) => {
     const ref = useRef<T>(null);
     const marginString = rootMargin ? getIntersectionMargin(rootMargin) : '0';
@@ -38,19 +38,16 @@ export const useIntersection = <T extends HTMLElement>({
         threshold: thresholds || 0,
     };
 
-    const intersectionHandler = useCallback(handleIntersection, [handleIntersection]);
-
-    const observer = new IntersectionObserver(intersectionHandler, intersectionOpt);
+    const intersectionHandler = useCallback(callbackIntersection, [callbackIntersection]);
 
     useEffect(() => {
         if (!ref.current) return;
+        const observer = new IntersectionObserver(intersectionHandler, intersectionOpt);
         observer.observe(ref.current);
 
-        return () => {
-            observer.disconnect();
-        };
+        return () => observer.disconnect();
     }, []);
-    return {ref: ref, observer: observer};
+    return ref;
 };
 
 const getIntersectionMargin = (marginOption: IntersectionMargin) => {
