@@ -11,10 +11,14 @@ export const HeaderWrapper = styled.header`
     background: ${props => props.theme.black};
     border-bottom: 1px solid rgba(219, 220, 222, 0.6);
 
-    & h1 {
+    & a {
         font-size: 22px;
         font-style: normal;
         font-weight: 400;
-        line-height: 145%; /* 31.9px */
+        transition: color 0.3s;
+
+        &:hover {
+            color: ${props => props.theme.blue};
+        }
     }
 `;
