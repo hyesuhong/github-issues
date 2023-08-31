@@ -31,7 +31,7 @@ export const useIntersection = <T extends HTMLElement>({
     callbackIntersection,
 }: IUseIntersection) => {
     const ref = useRef<T>(null);
-    const marginString = rootMargin ? getIntersectionMargin(rootMargin) : '0';
+    const marginString = rootMargin ? getIntersectionMargin(rootMargin) : '0px';
     const intersectionOpt = {
         root: root || null,
         rootMargin: marginString,
