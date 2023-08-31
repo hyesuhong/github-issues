@@ -35,7 +35,14 @@ const ContentContainer = ({issueNumber}: Props) => {
         <>
             {issue && (
                 <>
-                    <Info useProfile={true} {...issue} />
+                    <Info
+                        useProfile={true}
+                        user={{login: issue.user.login, avatar_url: issue.user.avatar_url}}
+                        title={issue.title}
+                        created_at={issue.created_at}
+                        comments={issue.comments}
+                        issueNumber={issueNumber}
+                    />
                     <IssueBody body={issue.body} />
                 </>
             )}

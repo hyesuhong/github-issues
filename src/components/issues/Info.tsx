@@ -1,12 +1,8 @@
-import {githubIssue} from '../../types/github';
 import * as S from '../../styles/IssuesInfo.styled';
 import {changeDateFormat} from '../../utils/date';
+import {InfoProps} from '../../types/IssueInfo';
 
-interface Props extends githubIssue {
-    useProfile?: boolean;
-}
-
-const Info = ({useProfile = false, user, title, created_at, comments, number}: Props) => {
+const Info = ({useProfile = false, user, title, created_at, comments, issueNumber}: InfoProps) => {
     return (
         <>
             <S.InfoWrapper>
@@ -17,7 +13,7 @@ const Info = ({useProfile = false, user, title, created_at, comments, number}: P
                 )}
                 <S.InfoTextArea>
                     <p className='id-title'>
-                        <span className='issue_num'>#{number} </span>
+                        <span className='issue_num'>#{issueNumber} </span>
                         <span className='title'>{title}</span>
                     </p>
                     <p className='create'>
