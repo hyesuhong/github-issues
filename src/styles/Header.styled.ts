@@ -7,6 +7,7 @@ export const HeaderWrapper = styled.header`
 
     position: sticky;
     top: 0;
+    z-index: 50;
 
     background: ${props => props.theme.black};
     border-bottom: 1px solid rgba(219, 220, 222, 0.6);

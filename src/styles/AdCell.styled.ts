@@ -21,7 +21,7 @@ export const AdWrapper = styled.div`
         color: ${props => props.theme.black};
         font-size: 12px;
         padding: 2px;
-        opacity: 0;
+        opacity: 0.5;
         transition: opacity 0.3s;
     }
 
