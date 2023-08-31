@@ -5,6 +5,7 @@ type IssuesState = {
     isLoading: boolean;
     data: githubIssue[];
     pageCount: number;
+    hasNext: boolean;
 };
 
 export const issuesState = atom<IssuesState>({
@@ -13,10 +14,6 @@ export const issuesState = atom<IssuesState>({
         isLoading: false,
         data: [],
         pageCount: 1,
+        hasNext: true,
     },
-});
-
-export const pageState = atom({
-    key: 'page',
-    default: 0,
 });

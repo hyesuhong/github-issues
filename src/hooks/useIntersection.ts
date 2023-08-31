@@ -38,15 +38,28 @@ export const useIntersection = <T extends HTMLElement>({
         threshold: thresholds || 0,
     };
 
-    const intersectionHandler = useCallback(callbackIntersection, [callbackIntersection]);
+    const intersectionHandler: IntersectionCB = useCallback(
+        (entries, observer) => {
+            const {isIntersecting, target} = entries[0];
+            if (isIntersecting) {
+                observer.unobserve(target);
+                callbackIntersection(entries, observer);
+            }
+        },
+        [callbackIntersection]
+    );
 
     useEffect(() => {
-        if (!ref.current) return;
-        const observer = new IntersectionObserver(intersectionHandler, intersectionOpt);
-        observer.observe(ref.current);
+        const observer = !ref.current
+            ? undefined
+            : new IntersectionObserver(intersectionHandler, intersectionOpt);
 
-        return () => observer.disconnect();
-    }, []);
+        if (observer && ref.current) observer.observe(ref.current);
+
+        return () => {
+            observer && observer.disconnect();
+        };
+    }, [ref, intersectionHandler]);
     return ref;
 };
 
