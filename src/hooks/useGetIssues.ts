@@ -17,13 +17,25 @@ const useGetIssues = () => {
                 page,
             });
 
+            const relRegexp = /(rel="next")/;
+            const pageRemain = res.headers.link && relRegexp.test(res.headers.link);
+            if (pageRemain) {
+                setIssues(prev => ({...prev, hasNext: true}));
+            }
+
             if (res.status === 200) {
-                setIssues(prev => ({
-                    ...prev,
-                    data: [...prev.data, ...res.data],
-                    hasNext: res.data.length > 0,
-                    error: undefined,
-                }));
+                setIssues(prev => {
+                    const nextData = [...prev.data, ...res.data];
+                    const filterdData = nextData.filter((data, index, array) => {
+                        const firstDataIndex = array.findIndex(item => item.number === data.number);
+                        return index === firstDataIndex;
+                    });
+                    return {
+                        ...prev,
+                        data: filterdData,
+                        error: undefined,
+                    };
+                });
             }
         } catch (error) {
             console.error(error);
