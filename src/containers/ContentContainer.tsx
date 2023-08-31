@@ -8,6 +8,7 @@ import {githubIssue} from '../types/github';
 import IssueBody from '../components/issues/IssueBody';
 import Info from '../components/issues/Info';
 import ErrorDisplay from '../components/ErrorDisplay';
+import Spinner from '../components/Spinner';
 
 interface Props {
     issueNumber: number;
@@ -19,7 +20,7 @@ const ContentContainer = ({issueNumber}: Props) => {
     const basicIssue = data.find(issue => issue.number === issueNumber);
 
     const [issue, setIssue] = useState<githubIssue | undefined>(basicIssue);
-
+    const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<AxiosError>();
 
     useEffect(() => {
@@ -36,6 +37,9 @@ const ContentContainer = ({issueNumber}: Props) => {
             })
             .catch(error => {
                 setError(error);
+            })
+            .finally(() => {
+                setIsLoading(false);
             });
     }, [issueNumber]);
 
@@ -66,6 +70,7 @@ const ContentContainer = ({issueNumber}: Props) => {
                     <IssueBody body={issue.body} />
                 </>
             )}
+            {isLoading && <Spinner />}
         </>
     );
 };
