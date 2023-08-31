@@ -1,12 +1,44 @@
 import IssueBody from '../components/issues/IssueBody';
 import Info from '../components/issues/Info';
 import {githubIssue} from '../types/github';
+import {useRecoilValue} from 'recoil';
+import {issuesState} from '../atom';
+import {useEffect, useState} from 'react';
+import {getIssueContent} from '../apis/github';
+import {TARGET_GITHUB} from '../constants/github';
 
-const ContentContainer = ({...props}: githubIssue) => {
+interface Props {
+    issueNumber: number;
+}
+
+const ContentContainer = ({issueNumber}: Props) => {
+    const {data} = useRecoilValue(issuesState);
+    const basicIssue = data.find(issue => issue.number === issueNumber);
+
+    const [issue, setIssue] = useState<githubIssue | undefined>(basicIssue);
+
+    useEffect(() => {
+        getIssueContent({
+            owner: TARGET_GITHUB.OWNER,
+            repo: TARGET_GITHUB.REPO,
+            issue_number: issueNumber,
+        })
+            .then(res => {
+                if (res.status === 200) {
+                    setIssue(res.data);
+                }
+            })
+            .catch(console.error);
+    }, [issueNumber]);
+
     return (
         <>
-            <Info useProfile={true} {...props} />
-            <IssueBody body={props.body} />
+            {issue && (
+                <>
+                    <Info useProfile={true} {...issue} />
+                    <IssueBody body={issue.body} />
+                </>
+            )}
         </>
     );
 };
