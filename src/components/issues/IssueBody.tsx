@@ -1,9 +1,9 @@
 import {PluggableList, ReactMarkdown} from 'react-markdown/lib/react-markdown';
-import * as S from '../../styles/IssueBody.styled';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
 import {oneDark} from 'react-syntax-highlighter/dist/esm/styles/prism';
+import * as S from '../../styles/IssueBody.styled';
 
 interface Props {
     body: string;

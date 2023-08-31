@@ -1,8 +1,8 @@
 import {useRecoilState} from 'recoil';
+import {AxiosError} from 'axios';
 import {issuesState} from '../atom';
 import {getIssuesList} from '../apis/github';
 import {TARGET_GITHUB} from '../constants/github';
-import {AxiosError} from 'axios';
 
 const useGetIssues = () => {
     const [issues, setIssues] = useRecoilState(issuesState);

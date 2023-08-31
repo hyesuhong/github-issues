@@ -1,10 +1,10 @@
-import {useRecoilValue} from 'recoil';
-import IssueList from '../components/issues/IssueList';
-import {issuesState} from '../atom';
-import {useIntersection} from '../hooks/useIntersection';
 import {useEffect} from 'react';
-import Spinner from '../components/Spinner';
+import {useRecoilValue} from 'recoil';
+import {issuesState} from '../atom';
 import useGetIssues from '../hooks/useGetIssues';
+import {useIntersection} from '../hooks/useIntersection';
+import IssueList from '../components/issues/IssueList';
+import Spinner from '../components/Spinner';
 import ErrorDisplay from '../components/ErrorDisplay';
 
 const ListContainer = () => {
