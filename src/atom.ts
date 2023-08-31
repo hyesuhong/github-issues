@@ -17,3 +17,8 @@ export const issuesState = atom<IssuesState>({
         hasNext: true,
     },
 });
+
+export const beforeItemState = atom({
+    key: 'beforeItemNumber',
+    default: -1,
+});

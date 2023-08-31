@@ -1,8 +1,8 @@
 import IssueBody from '../components/issues/IssueBody';
 import Info from '../components/issues/Info';
 import {githubIssue} from '../types/github';
-import {useRecoilValue} from 'recoil';
-import {issuesState} from '../atom';
+import {useRecoilValue, useSetRecoilState} from 'recoil';
+import {beforeItemState, issuesState} from '../atom';
 import {useEffect, useState} from 'react';
 import {getIssueContent} from '../apis/github';
 import {TARGET_GITHUB} from '../constants/github';
@@ -13,6 +13,7 @@ interface Props {
 
 const ContentContainer = ({issueNumber}: Props) => {
     const {data} = useRecoilValue(issuesState);
+    const setBeforeItemState = useSetRecoilState(beforeItemState);
     const basicIssue = data.find(issue => issue.number === issueNumber);
 
     const [issue, setIssue] = useState<githubIssue | undefined>(basicIssue);
@@ -30,6 +31,11 @@ const ContentContainer = ({issueNumber}: Props) => {
             })
             .catch(console.error);
     }, [issueNumber]);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        setBeforeItemState(issueNumber);
+    }, []);
 
     return (
         <>
