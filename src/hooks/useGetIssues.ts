@@ -2,6 +2,7 @@ import {useRecoilState} from 'recoil';
 import {issuesState} from '../atom';
 import {getIssuesList} from '../apis/github';
 import {TARGET_GITHUB} from '../constants/github';
+import {AxiosError} from 'axios';
 
 const useGetIssues = () => {
     const [issues, setIssues] = useRecoilState(issuesState);
@@ -21,10 +22,12 @@ const useGetIssues = () => {
                     ...prev,
                     data: [...prev.data, ...res.data],
                     hasNext: res.data.length > 0,
+                    error: undefined,
                 }));
             }
         } catch (error) {
             console.error(error);
+            setIssues(prev => ({...prev, error: error as AxiosError}));
         } finally {
             setIssues(prev => ({...prev, isLoading: false}));
         }

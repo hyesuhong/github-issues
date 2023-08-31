@@ -5,9 +5,10 @@ import {useIntersection} from '../hooks/useIntersection';
 import {useEffect} from 'react';
 import Spinner from '../components/Spinner';
 import useGetIssues from '../hooks/useGetIssues';
+import ErrorDisplay from '../components/ErrorDisplay';
 
 const ListContainer = () => {
-    const {data, isLoading, hasNext} = useRecoilValue(issuesState);
+    const {data, isLoading, hasNext, error} = useRecoilValue(issuesState);
     const isInitialFetch = data.length < 1;
 
     const {getIssues, getNextIssues} = useGetIssues();
@@ -26,6 +27,13 @@ const ListContainer = () => {
 
     return (
         <>
+            {error && (
+                <ErrorDisplay
+                    status={error.response!.status}
+                    statusText={error.response!.statusText}
+                    message={error.message}
+                ></ErrorDisplay>
+            )}
             <ul>
                 {data &&
                     data.map((issue, idx) => (

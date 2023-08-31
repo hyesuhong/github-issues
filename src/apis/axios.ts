@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosError} from 'axios';
 
 const BASE_URL = 'https://api.github.com';
 const GITHUB_TOKEN = process.env.REACT_APP_GITHUB_TOKEN;
@@ -17,6 +17,6 @@ instance.interceptors.request.use(
         return config;
     },
     error => {
-        return error;
+        return error as AxiosError;
     }
 );

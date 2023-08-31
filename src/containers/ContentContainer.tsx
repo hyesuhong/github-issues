@@ -6,6 +6,8 @@ import {beforeItemState, issuesState} from '../atom';
 import {useEffect, useState} from 'react';
 import {getIssueContent} from '../apis/github';
 import {TARGET_GITHUB} from '../constants/github';
+import {AxiosError} from 'axios';
+import ErrorDisplay from '../components/ErrorDisplay';
 
 interface Props {
     issueNumber: number;
@@ -18,6 +20,8 @@ const ContentContainer = ({issueNumber}: Props) => {
 
     const [issue, setIssue] = useState<githubIssue | undefined>(basicIssue);
 
+    const [error, setError] = useState<AxiosError>();
+
     useEffect(() => {
         getIssueContent({
             owner: TARGET_GITHUB.OWNER,
@@ -27,9 +31,12 @@ const ContentContainer = ({issueNumber}: Props) => {
             .then(res => {
                 if (res.status === 200) {
                     setIssue(res.data);
+                    setError(undefined);
                 }
             })
-            .catch(console.error);
+            .catch(error => {
+                setError(error);
+            });
     }, [issueNumber]);
 
     useEffect(() => {
@@ -39,6 +46,13 @@ const ContentContainer = ({issueNumber}: Props) => {
 
     return (
         <>
+            {error && (
+                <ErrorDisplay
+                    status={error.response!.status}
+                    statusText={error.response!.statusText}
+                    message={error.message}
+                ></ErrorDisplay>
+            )}
             {issue && (
                 <>
                     <Info
