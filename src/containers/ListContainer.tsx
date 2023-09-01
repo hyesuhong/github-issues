@@ -3,6 +3,7 @@ import {useRecoilValue} from 'recoil';
 import {issuesState} from '../atom';
 import useGetIssues from '../hooks/useGetIssues';
 import {useIntersection} from '../hooks/useIntersection';
+import {IntersectionHandler} from '../types/intersection';
 import IssueList from '../components/issues/IssueList';
 import Spinner from '../components/Spinner';
 import ErrorDisplay from '../components/ErrorDisplay';
@@ -13,8 +14,13 @@ const ListContainer = () => {
 
     const {getIssues, getNextIssues} = useGetIssues();
 
-    const callbackIntersection = () => {
-        getNextIssues();
+    const callbackIntersection: IntersectionHandler = ([entry], observer) => {
+        const {isIntersecting, target} = entry;
+        if (isIntersecting) {
+            console.info(data);
+            observer.unobserve(target);
+            getNextIssues();
+        }
     };
 
     const ref = useIntersection<HTMLDivElement>({

@@ -1,27 +1,8 @@
 import {useCallback, useEffect, useRef} from 'react';
-
-export type IntersectionCB = (
-    entries: IntersectionObserverEntry[],
-    observer: IntersectionObserver
-) => void;
-
-type marginType = number | string;
-
-// number => px, string => px or %
-type IntersectionMargin =
-    | [marginType]
-    | [marginType, marginType]
-    | [marginType, marginType, marginType]
-    | [marginType, marginType, marginType, marginType];
-
-interface IntersectionOption {
-    root?: HTMLElement;
-    rootMargin?: IntersectionMargin;
-    thresholds?: number | number[]; // 0 ~ 1
-}
+import {IntersectionHandler, IntersectionMargin, IntersectionOption} from '../types/intersection';
 
 export interface IUseIntersection extends IntersectionOption {
-    callbackIntersection: IntersectionCB;
+    callbackIntersection: IntersectionHandler;
 }
 
 export const useIntersection = <T extends HTMLElement>({
@@ -38,16 +19,7 @@ export const useIntersection = <T extends HTMLElement>({
         threshold: thresholds || 0,
     };
 
-    const intersectionHandler: IntersectionCB = useCallback(
-        (entries, observer) => {
-            const {isIntersecting, target} = entries[0];
-            if (isIntersecting) {
-                observer.unobserve(target);
-                callbackIntersection(entries, observer);
-            }
-        },
-        [callbackIntersection]
-    );
+    const intersectionHandler = useCallback(callbackIntersection, [callbackIntersection]);
 
     useEffect(() => {
         const observer = !ref.current
