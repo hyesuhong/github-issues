@@ -93,3 +93,18 @@ src
 ```
 
 ## 기술 스택
+
+### Development
+
+![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=black)
+![Typescript](https://img.shields.io/badge/Typescript-3178C6?style=flat-square&logo=Typescript&logoColor=white)
+![React Router](https://img.shields.io/badge/React_Router-CA4245?style=flat-square&logo=reactrouter&logoColor=white)
+![recoil](https://img.shields.io/badge/recoil-3578E5?style=flat-square&logo=recoil&logoColor=white)
+![axios](https://img.shields.io/badge/axios-5A29E4?style=flat-square&logo=axios&logoColor=white)
+![styled components](https://img.shields.io/badge/styled_components-DB7093?style=flat-square&logo=styledcomponents&logoColor=white)
+![react markdown](https://img.shields.io/badge/react%20markdown-ffffff?style=flat-square)
+
+### Linter & Formatter
+
+![eslint](https://img.shields.io/badge/eslint-4B32C3?style=flat-square&logo=eslint&logoColor=white)
+![prettier](https://img.shields.io/badge/prettier-F7B93E?style=flat-square&logo=prettier&logoColor=black)
