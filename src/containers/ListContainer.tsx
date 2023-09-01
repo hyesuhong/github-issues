@@ -7,6 +7,7 @@ import {IntersectionHandler} from '../types/intersection';
 import IssueList from '../components/issues/IssueList';
 import Spinner from '../components/Spinner';
 import ErrorDisplay from '../components/ErrorDisplay';
+import LoadingScreen from '../components/LoadingScreen';
 
 const ListContainer = () => {
     const {data, isLoading, hasNext, error} = useRecoilValue(issuesState);
@@ -29,10 +30,12 @@ const ListContainer = () => {
 
     useEffect(() => {
         isInitialFetch && getIssues(1);
+        console.info(isLoading);
     }, []);
 
     return (
         <>
+            {isInitialFetch && isLoading && <LoadingScreen />}
             {error ? (
                 <ErrorDisplay
                     status={error.response!.status}
@@ -47,7 +50,7 @@ const ListContainer = () => {
                                 <IssueList index={idx} {...issue} key={issue.node_id} />
                             ))}
                     </ul>
-                    {isLoading && <Spinner />}
+                    {!isInitialFetch && isLoading && <Spinner />}
                     {hasNext && <div ref={ref} style={{height: 50}}></div>}
                 </>
             )}

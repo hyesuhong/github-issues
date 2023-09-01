@@ -9,7 +9,7 @@ const useGetIssues = () => {
 
     const getIssues = async (page: number) => {
         try {
-            setIssues(prev => ({...prev, hasNext: false}));
+            setIssues(prev => ({...prev, hasNext: false, isLoading: true}));
 
             const res = await getIssuesList({
                 owner: TARGET_GITHUB.OWNER,
