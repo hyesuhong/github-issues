@@ -1,45 +1,40 @@
 import {useEffect} from 'react';
-import {useRecoilState, useRecoilValue, useSetRecoilState} from 'recoil';
-import {beforeItemState, issueDetailState, issuesState} from '../atom';
-import useGetIssueDetail from '../hooks/useGetIssueDetail';
+import {useRecoilValue, useSetRecoilState} from 'recoil';
+import {beforeItemState, issuesState} from '../atom';
+import {instance} from '../apis/axios';
+import {TARGET_GITHUB} from '../constants/github';
 import IssueBody from '../components/issues/IssueBody';
 import Info from '../components/issues/Info';
 import ErrorDisplay from '../components/ErrorDisplay';
 import LoadingScreen from '../components/LoadingScreen';
+import useAxios from '../hooks/useAxios';
+import {githubIssue} from '../types/github';
 
 interface Props {
     issueNumber: number;
 }
 
 const ContentContainer = ({issueNumber}: Props) => {
-    const {data: issuesListData} = useRecoilValue(issuesState);
-    const [{data, isLoading, error}, setIssueDetail] = useRecoilState(issueDetailState);
+    const {data} = useRecoilValue(issuesState);
     const setBeforeItemState = useSetRecoilState(beforeItemState);
 
-    const basicIssue = issuesListData
-        ? issuesListData.find(issue => issue.number === issueNumber)
-        : undefined;
+    const {response, error, loading} = useAxios<githubIssue>({
+        options: {url: `/repos/${TARGET_GITHUB.OWNER}/${TARGET_GITHUB.REPO}/issues/${issueNumber}`},
+        axiosInstance: instance,
+    });
 
-    const issue = data ? data : basicIssue;
+    const basicIssue = data ? data.find(issue => issue.number === issueNumber) : undefined;
 
-    const {getIssue} = useGetIssueDetail();
-
-    useEffect(() => {
-        getIssue(issueNumber);
-    }, [issueNumber, getIssue]);
+    const issue = response ? response.data : basicIssue;
 
     useEffect(() => {
         window.scrollTo(0, 0);
         setBeforeItemState(issueNumber);
-
-        return () => {
-            setIssueDetail({isLoading: false, data: undefined, error: undefined});
-        };
-    }, [issueNumber, setBeforeItemState, setIssueDetail]);
+    }, [issueNumber, setBeforeItemState]);
 
     return (
         <>
-            {isLoading && <LoadingScreen />}
+            {loading && <LoadingScreen />}
             {error ? (
                 <ErrorDisplay
                     status={error.response?.status}
