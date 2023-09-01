@@ -1,10 +1,10 @@
 import {useEffect} from 'react';
 import {useRecoilState, useRecoilValue, useSetRecoilState} from 'recoil';
 import {beforeItemState, issueDetailState, issuesState} from '../atom';
+import useGetIssueDetail from '../hooks/useGetIssueDetail';
 import IssueBody from '../components/issues/IssueBody';
 import Info from '../components/issues/Info';
 import ErrorDisplay from '../components/ErrorDisplay';
-import useGetIssueDetail from '../hooks/useGetIssueDetail';
 import LoadingScreen from '../components/LoadingScreen';
 
 interface Props {

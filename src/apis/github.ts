@@ -1,5 +1,5 @@
-import {GetIssueContent, GetIssues} from '../types/api';
 import {instance} from './axios';
+import {GetIssueContent, GetIssues} from '../types/api';
 
 // /repos/{owner}/{repo}/issues
 /* 

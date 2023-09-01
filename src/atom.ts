@@ -1,6 +1,6 @@
 import {atom} from 'recoil';
-import {githubIssue} from './types/github';
 import {AxiosError} from 'axios';
+import {githubIssue} from './types/github';
 
 interface apiState<T> {
     isLoading: boolean;

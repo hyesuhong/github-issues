@@ -1,7 +1,7 @@
 import {memo} from 'react';
-import * as S from '../../styles/IssuesInfo.styled';
-import {changeDateFormat} from '../../utils/date';
 import {InfoProps} from '../../types/IssueInfo';
+import {changeDateFormat} from '../../utils/date';
+import * as S from '../../styles/IssuesInfo.styled';
 
 const Info = memo(
     ({useProfile = false, user, title, created_at, comments, issueNumber}: InfoProps) => {

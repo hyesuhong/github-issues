@@ -18,7 +18,6 @@ const ListContainer = () => {
     const callbackIntersection: IntersectionHandler = ([entry], observer) => {
         const {isIntersecting, target} = entry;
         if (isIntersecting) {
-            console.info(data);
             observer.unobserve(target);
             getNextIssues();
         }
@@ -30,7 +29,6 @@ const ListContainer = () => {
 
     useEffect(() => {
         isInitialFetch && getIssues(1);
-        console.info(isLoading);
     }, []);
 
     return (

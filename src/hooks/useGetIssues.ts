@@ -1,5 +1,5 @@
-import {useRecoilState} from 'recoil';
 import {AxiosError} from 'axios';
+import {useRecoilState} from 'recoil';
 import {issuesState} from '../atom';
 import {getIssuesList} from '../apis/github';
 import {TARGET_GITHUB} from '../constants/github';
