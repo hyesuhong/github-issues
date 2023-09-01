@@ -25,7 +25,7 @@ const useGetIssues = () => {
 
             if (res.status === 200) {
                 setIssues(prev => {
-                    const nextData = [...prev.data, ...res.data];
+                    const nextData = prev.data ? [...prev.data, ...res.data] : [...res.data];
                     const filterdData = nextData.filter((data, index, array) => {
                         const firstDataIndex = array.findIndex(item => item.number === data.number);
                         return index === firstDataIndex;

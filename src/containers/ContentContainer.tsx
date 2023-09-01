@@ -17,7 +17,7 @@ interface Props {
 const ContentContainer = ({issueNumber}: Props) => {
     const {data} = useRecoilValue(issuesState);
     const setBeforeItemState = useSetRecoilState(beforeItemState);
-    const basicIssue = data.find(issue => issue.number === issueNumber);
+    const basicIssue = data ? data.find(issue => issue.number === issueNumber) : undefined;
 
     const [issue, setIssue] = useState<githubIssue | undefined>(basicIssue);
     const [isLoading, setIsLoading] = useState(true);
