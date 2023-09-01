@@ -1,55 +1,56 @@
-# Getting Started with Create React App
+# 원티드 프리온보딩 12차 - 2주차 과제
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 과제 소개
 
-## Available Scripts
+> 특정 깃헙 레파지토리의 이슈 목록과 상세 내용을 확인하는 웹 사이트 구축
 
-In the project directory, you can run:
+이번 과제에서는 [react의 이슈](https://github.com/facebook/react/issues)로 조건이 주어졌습니다.
 
-### `npm start`
+### 과제 필수 요구 사항
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+-   이슈 목록 및 상세 화면 기능 구현
+-   데이터 요청 중 로딩 표시
+-   에러 화면 구현
+-   지정된 조건(open 상태만, 코멘트 많은 순)에 맞게 데이터 요청 및 표시
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 배포 주소
 
-### `npm test`
+<!-- 이미지 & 링크 추가 -->
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests)
-for more information.
+## 시작 가이드
 
-### `npm run build`
+### 설치
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+$ git clone git@github.com:hyesuhong/wanted-pre-onboarding-week-2.git
+$ cd wanted-pre-onboarding-week-2
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 로컬 서버 구동
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for
-more information.
+```
+$ npm install
+$ npm run start
+```
 
-### `npm run eject`
+-   과제에서 데이터를 받아오는 Github REST API 는 token을 발급하지 않으면 시간 당 60회로 API 호출
+    횟수가 제한됩니다.
+-   **token 설정**
+    -   `.env` 파일 생성 후 `REACT_APP_GITHUB_TOKEN`에 발급 받은 token을 값으로 넣습니다.
+    -   token 발급에 관해서는
+        [여기](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)를
+        참고할 수 있습니다.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 주요 기능
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time.
-This command will remove the single build dependency from your project.
+## 프로젝트 구성
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel,
-ESLint, etc) right into your project so you have full control over them. All of the commands except
-`eject` will still work, but they will point to the copied scripts so you can tweak them. At this
-point you’re on your own.
+### 디렉토리
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle
-deployments, and you shouldn’t feel obligated to use this feature. However we understand that this
-tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### 아키텍처
 
-## Learn More
+## 기술 스택
 
-You can learn more in the
-[Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 언어
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 라이브러리
