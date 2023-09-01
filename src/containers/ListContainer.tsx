@@ -5,7 +5,6 @@ import useGetIssues from '../hooks/useGetIssues';
 import {useIntersection} from '../hooks/useIntersection';
 import {IntersectionHandler} from '../types/intersection';
 import IssueList from '../components/issues/IssueList';
-import Spinner from '../components/Spinner';
 import ErrorDisplay from '../components/ErrorDisplay';
 import LoadingScreen from '../components/LoadingScreen';
 
@@ -48,7 +47,7 @@ const ListContainer = () => {
                                 <IssueList index={idx} {...issue} key={issue.node_id} />
                             ))}
                     </ul>
-                    {!isInitialFetch && isLoading && <Spinner />}
+                    {!isInitialFetch && isLoading && <LoadingScreen $isFull={false} />}
                     {hasNext && <div ref={ref} style={{height: 50}}></div>}
                 </>
             )}

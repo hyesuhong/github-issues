@@ -1,8 +1,8 @@
 import {keyframes, styled} from 'styled-components';
 
-const Spinner = () => {
-    return <Wrapper />;
-};
+export interface loadingProps {
+    $isFull?: boolean;
+}
 
 const spinKeyframe = keyframes`
 	from {
@@ -14,14 +14,23 @@ const spinKeyframe = keyframes`
 	}
 `;
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div<loadingProps>`
+    ${props =>
+        props.$isFull
+            ? `position: fixed;
+    						top: 0;
+    						left: 0;
+    						width: 100%;
+								background: rgba(23, 30, 41, 0.7);`
+            : ''}
+
+    height: ${props => (props.$isFull ? '100%' : '100px')};
+
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100px;
 
-    &::before {
-        content: '';
+    & > span {
         width: 50px;
         height: 50px;
         background: url('https://img.icons8.com/material-rounded/96/DBDCDE/spinner-frame-4.png')
@@ -30,5 +39,3 @@ const Wrapper = styled.div`
         animation: ${spinKeyframe} 1.6s ease-in-out infinite;
     }
 `;
-
-export default Spinner;
