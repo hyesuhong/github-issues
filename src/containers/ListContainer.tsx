@@ -29,7 +29,7 @@ const ListContainer = () => {
 
     useEffect(() => {
         isInitialFetch && getIssues(1);
-    }, []);
+    }, [isInitialFetch, getIssues]);
 
     return (
         <>

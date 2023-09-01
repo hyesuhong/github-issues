@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useRef} from 'react';
+import {useCallback, useEffect, useMemo, useRef} from 'react';
 import {IntersectionHandler, IntersectionMargin, IntersectionOption} from '../types/intersection';
 
 export interface IUseIntersection extends IntersectionOption {
@@ -13,11 +13,14 @@ export const useIntersection = <T extends HTMLElement>({
 }: IUseIntersection) => {
     const ref = useRef<T>(null);
     const marginString = rootMargin ? getIntersectionMargin(rootMargin) : '0px';
-    const intersectionOpt = {
-        root: root || null,
-        rootMargin: marginString,
-        threshold: thresholds || 0,
-    };
+    const intersectionOpt = useMemo(
+        () => ({
+            root: root || null,
+            rootMargin: marginString,
+            threshold: thresholds || 0,
+        }),
+        [marginString, root, thresholds]
+    );
 
     const intersectionHandler = useCallback(callbackIntersection, [callbackIntersection]);
 
@@ -31,7 +34,7 @@ export const useIntersection = <T extends HTMLElement>({
         return () => {
             observer && observer.disconnect();
         };
-    }, [ref, intersectionHandler]);
+    }, [ref, intersectionHandler, intersectionOpt]);
     return ref;
 };
 

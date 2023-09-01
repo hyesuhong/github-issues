@@ -26,7 +26,7 @@ const ContentContainer = ({issueNumber}: Props) => {
 
     useEffect(() => {
         getIssue(issueNumber);
-    }, [issueNumber]);
+    }, [issueNumber, getIssue]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -35,7 +35,7 @@ const ContentContainer = ({issueNumber}: Props) => {
         return () => {
             setIssueDetail({isLoading: false, data: undefined, error: undefined});
         };
-    }, []);
+    }, [issueNumber, setBeforeItemState, setIssueDetail]);
 
     return (
         <>
