@@ -1,5 +1,6 @@
 import {instance} from './axios';
 import {GetIssueContent, GetIssues} from '../types/api';
+import {githubIssue} from '../types/github';
 
 // /repos/{owner}/{repo}/issues
 /* 
@@ -11,7 +12,7 @@ import {GetIssueContent, GetIssues} from '../types/api';
 export const getIssuesList = async ({owner, repo, page}: GetIssues) => {
     const basicQuery = 'sort=comments';
     const query = page ? `${basicQuery}&page=${page}` : basicQuery;
-    return await instance.get(`/repos/${owner}/${repo}/issues?${query}`);
+    return await instance.get<githubIssue[]>(`/repos/${owner}/${repo}/issues?${query}`);
 };
 
 // /repos/{owner}/{repo}/issues/{issue_number}
@@ -23,5 +24,5 @@ export const getIssuesList = async ({owner, repo, page}: GetIssues) => {
 410	Gone
 */
 export const getIssueContent = async ({owner, repo, issue_number}: GetIssueContent) => {
-    return await instance.get(`/repos/${owner}/${repo}/issues/${issue_number}`);
+    return await instance.get<githubIssue>(`/repos/${owner}/${repo}/issues/${issue_number}`);
 };

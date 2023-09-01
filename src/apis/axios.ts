@@ -16,6 +16,6 @@ instance.interceptors.request.use(
         return config;
     },
     error => {
-        return error as AxiosError;
+        return Promise.reject<AxiosError>(error);
     }
 );

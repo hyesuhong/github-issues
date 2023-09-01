@@ -42,8 +42,8 @@ const ContentContainer = ({issueNumber}: Props) => {
             {isLoading && <LoadingScreen />}
             {error ? (
                 <ErrorDisplay
-                    status={error.response!.status}
-                    statusText={error.response!.statusText}
+                    status={error.response?.status}
+                    statusText={error.response?.statusText}
                     message={error.message}
                 />
             ) : (
