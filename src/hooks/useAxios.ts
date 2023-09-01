@@ -20,7 +20,6 @@ const useAxios = <T>({options, axiosInstance = axios}: UseAxios) => {
 
         await axiosInstance<T>(options)
             .then(res => {
-                console.info(res);
                 setState(prev => ({...prev, response: res, error: undefined}));
             })
             .catch(error => {
@@ -28,7 +27,6 @@ const useAxios = <T>({options, axiosInstance = axios}: UseAxios) => {
                 setState(prev => ({...prev, response: undefined, error: error}));
             })
             .finally(() => {
-                console.info('finish');
                 setState(prev => ({...prev, loading: false}));
             });
     }, [axiosInstance]);

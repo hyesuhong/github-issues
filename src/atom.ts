@@ -23,13 +23,6 @@ export const issuesState = atom<IssuesState>({
     },
 });
 
-export const issueDetailState = atom<apiState<githubIssue>>({
-    key: 'issueDetail',
-    default: {
-        isLoading: false,
-    },
-});
-
 export const beforeItemState = atom({
     key: 'beforeItemNumber',
     default: -1,
