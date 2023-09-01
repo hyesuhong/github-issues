@@ -7,9 +7,11 @@
 이번 과제에서는 [react github의 이슈](https://github.com/facebook/react/issues)로 조건이
 주어졌습니다.
 
-## 배포 주소
+## 결과 미리보기
 
-<!-- 이미지 & 링크 추가 -->
+[**배포 링크**](https://deluxe-rolypoly-f3b4ea.netlify.app)
+
+<img src="https://github.com/hyesuhong/wanted-pre-onboarding-week-2/assets/70276660/94926238-7527-4a27-98a1-0ab68603ec9a" alt="project_gif" height=400 />
 
 ## 시작 가이드
 
